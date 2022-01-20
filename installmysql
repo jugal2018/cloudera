@@ -1,0 +1,12 @@
+#!/bin/bash
+sudo yum install wget -y
+wget https://repo.mysql.com/mysql80-community-release-el7-3.noarch.rpm
+sudo rpm -ivh mysql80-community-release-el7-3.noarch.rpm
+sudo yum update -y
+sudo yum install mysql-server -y
+sudo yum install mysql-connector-java -y
+sudo systemctl enable mysqld
+sudo systemctl start mysqld
+p="$(sudo cat /var/log/mysqld.log |grep "temporary password"|awk '{print $13}')"
+sudo mysql -u root -p"$p" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'New201*';" 
+sudo systemctl restart mysqld
