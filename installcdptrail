@@ -1,7 +1,15 @@
 #!/bin/bash
 sudo sed -i 's|SELINUX=enforcing|SELINUX=permissive|g' /etc/selinux/config
 sudo setenforce 0
+sudo sysctl -w vm.swappiness=1
+sudo yum install rng-tools
+cp /usr/lib/systemd/system/rngd.service /etc/systemd/system/
+sed -i -e 's/ExecStart=\/sbin\/rngd -f/ExecStart=\/sbin\/rngd -f -r \/dev\/urandom/' /etc/systemd/system/rngd.service
+systemctl daemon-reload
+systemctl start rngd
+systemctl enable rngd
 sudo yum install wget -y
+sudo yum install krb5-workstation, krb5-libs -y
 wget https://archive.cloudera.com/cm7/7.4.4/cloudera-manager-installer.bin
 chmod u+x cloudera-manager-installer.bin
 sudo ./cloudera-manager-installer.bin
