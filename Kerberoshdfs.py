@@ -1,9 +1,9 @@
-python3 -m venv test
+'''python3 -m venv test
 source test/bin/activate
 
 pip3 install hdfs[Kerberos]
 
-More info-https://pypi.org/project/hdfs/
+More info-https://pypi.org/project/hdfs/'''
 
 
 from hdfs.ext.kerberos import KerberosClient
